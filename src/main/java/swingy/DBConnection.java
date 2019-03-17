@@ -21,10 +21,13 @@ public class DBConnection
     
     public void initConnection() throws SQLException, ClassNotFoundException
     {
+        //Database connection parameters
         String host = "localhost";
         database = "swingy";
         String user = "root";
         String password = "dbpass";
+        
+        //Mysql connection string
         String connectionString = "jdbc:mysql://" + host +
                 "?user=" + user + "&password=" + password;
 
