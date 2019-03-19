@@ -20,15 +20,9 @@ import java.awt.event.WindowEvent;
 
 import java.sql.SQLException;
 
-//import java.util.Set;
-//import javax.validation.Validation;
-//import javax.validation.Validator;
-//import javax.validation.ValidatorFactory;
-//import javax.validation.ConstraintViolation;
-
 public class MainFrame extends JFrame
 {
-	private JButton startButton;
+    private JButton startButton;
     private JTextArea statsTextArea, logTextArea;
     private JLabel statsLabel, logLabel;
     private Box leftBox;
@@ -72,25 +66,24 @@ public class MainFrame extends JFrame
     	getContentPane().add(startButton, BorderLayout.SOUTH);
         getContentPane().add(boardPanel, BorderLayout.CENTER);
         addWindowListener(windowAdapter());
+        
+        updateLog("Click Start game button to begin.");
     }
 
     private ActionListener startButtonListener()
     {
     	return new ActionListener()
     	{
-    		public void actionPerformed(ActionEvent e)
-    		{
-    			SelectHeroDialog select = new SelectHeroDialog(instance);
+            public void actionPerformed(ActionEvent e)
+            {
+                SelectHeroDialog select = new SelectHeroDialog(instance);
                 select.pack();
                 select.setLocationRelativeTo(null);
                 select.setVisible(true);
                 hero = select.getHero();
-                //Validator validator = Validation.buildDefaultValidatorFactory()
-                    //.getValidator();
 
                 if (hero != null)
                 {
-                    //Set<ConstraintViolation<Hero>> constraintViolations = validator.validate(hero);
                     ctr = new Controller(hero);
                     ctr.updateHeroStats(statsTextArea);
                     boardPanel.setHero(hero);
@@ -101,6 +94,7 @@ public class MainFrame extends JFrame
                     boardPanel.requestFocus();
                     startButton.setEnabled(false);
                     hero.setMaxHp(hero.getHitPoints());
+                    dirInfoDisplay();
                 }
     		}
     	};
@@ -138,5 +132,20 @@ public class MainFrame extends JFrame
     public void updateLog(String s)
     {
         logTextArea.append(s);
+    }
+    
+    public void clearLog()
+    {
+        logTextArea.setText("");
+    }
+    
+    public void dirInfoDisplay()
+    {
+        updateLog("Navigation controls\n");
+        updateLog("\n");
+    	updateLog("Keyup: North\n");
+    	updateLog("Keyright: East\n");
+    	updateLog("Keydown: South\n");
+    	updateLog("Keyleft: West\n");     
     }
 }

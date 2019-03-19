@@ -1,0 +1,6 @@
+{
+    "host": "localhost",
+    "database": "swingy",
+    "user": "root",
+    "password": "root"
+}

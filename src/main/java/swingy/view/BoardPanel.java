@@ -17,22 +17,22 @@ import main.java.swingy.Board;
 
 public class BoardPanel extends JPanel
 {
-	private MainFrame frame;
-	private Hero hero;
-	private boolean gameStarted;
+    private MainFrame frame;
+    private Hero hero;
+    private boolean gameStarted;
     private Board board;
     private int[][] gameBoard;
     private Controller ctr;
 
-	public BoardPanel(MainFrame frame)
-	{
-		this.frame = frame;
-		gameStarted = false;
+    public BoardPanel(MainFrame frame)
+    {
+        this.frame = frame;
+        gameStarted = false;
 
-		addKeyListener(heroKeyAdapter());
-	}
+        addKeyListener(heroKeyAdapter());
+    }
 
-	@Override
+    @Override
     public void paintComponent(Graphics g) {
         super.paintComponent(g);
 
@@ -130,10 +130,12 @@ public class BoardPanel extends JPanel
 
                   	if (!hero.hasWon())
                   	{
-                  		JOptionPane.showMessageDialog(frame, "You lose");
-                  		frame.enableStartButton();
-						setFocusable(false);
-						updateHero();
+                            JOptionPane.showMessageDialog(frame, "You lose");
+                            frame.enableStartButton();
+                            setFocusable(false);
+                            updateHero();
+                            frame.clearLog();
+                            frame.updateLog("Click Start game button to begin.");
                   	}
                 }
 
@@ -172,13 +174,15 @@ public class BoardPanel extends JPanel
     private void checkBorders()
     {
     	if (hero.getXPos() == board.getSize() - 1 || hero.getXPos() == 0  ||
-    		hero.getYPos() == board.getSize() - 1 || hero.getYPos() == 0)
-		{
-			JOptionPane.showMessageDialog(frame, "You win");
-			frame.enableStartButton();
-			setFocusable(false);
-			updateHero();
-		}
+            hero.getYPos() == board.getSize() - 1 || hero.getYPos() == 0)
+        {
+            JOptionPane.showMessageDialog(frame, "You win");
+            frame.enableStartButton();
+            setFocusable(false);
+            updateHero();
+            frame.clearLog();
+            frame.updateLog("Click Start game button to begin.");
+        }
     }
 
     private void updateHero()

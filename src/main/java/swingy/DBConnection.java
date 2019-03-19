@@ -5,9 +5,17 @@ import java.sql.Connection;
 import java.sql.SQLException;
 import java.sql.Statement;
 
+import org.json.simple.JSONObject;
+import org.json.simple.parser.JSONParser;
+import org.json.simple.parser.ParseException;
+
+import java.io.FileNotFoundException;
+import java.io.FileReader;
+import java.io.IOException;
+
 public class DBConnection
 {
-    private static final DBConnection instance = new DBConnection();
+    private static DBConnection instance = new DBConnection();
     private Connection connection;
     private Statement query;
     private String database;
@@ -21,11 +29,13 @@ public class DBConnection
     
     public void initConnection() throws SQLException, ClassNotFoundException
     {
+        JSONObject config = MysqlConfig();
+        
         //Database connection parameters
-        String host = "localhost";
-        database = "swingy";
-        String user = "root";
-        String password = "dbpass";
+        String host = (String)config.get("host");
+        database = (String)config.get("database");
+        String user = (String)config.get("user");
+        String password = (String)config.get("password");
         
         //Mysql connection string
         String connectionString = "jdbc:mysql://" + host +
@@ -54,5 +64,25 @@ public class DBConnection
     public String getDatabase()
     {
         return database;
+    }
+    
+    private JSONObject MysqlConfig()
+    {
+        JSONParser parser = new JSONParser();
+        JSONObject mysqlObj = null;
+        
+        try
+        {
+            mysqlObj = (JSONObject)parser.parse(new FileReader("config.json"));
+        }
+        catch (FileNotFoundException e) {
+            System.out.println("Json file not found.");
+        } catch (IOException e) {
+            System.out.println("Error reading file.");
+        } catch (ParseException e) {
+            System.out.println("Error parsing Json: " + e.getMessage());
+        }
+        
+        return mysqlObj;
     }
 }

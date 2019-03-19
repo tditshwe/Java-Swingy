@@ -18,7 +18,7 @@ public class GameConsole
 
 	public int getOption()
 	{
-		return takeInt(2);
+            return takeInt(2);
 	}
 
 	public Hero createHero()
@@ -73,6 +73,7 @@ public class GameConsole
     	System.out.println("d: East");
     	System.out.println("s: South");
     	System.out.println("a: West");
+        System.out.println("q: Exit game");
     	System.out.print("Your direction: ");
 
     	return takeDir();
